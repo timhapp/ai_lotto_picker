@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['timhapp.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
+    "polls.apps.PollsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -72,14 +73,27 @@ WSGI_APPLICATION = "lottobot.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'wantsajo_lottobot',
+#        'USER': 'wantsajo',
+#        'PASSWORD': 'TUQNWdRGbFB6agtnmmKR',
+#        'HOST': 'server005.webhostingpremium.com',
+#        'PORT': '2222',
+#    }
+#}
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'timhapp$default',                                                                                                                                                                           
+#        'USER': 'timhapp',
+#        'PASSWORD': 'LuV*KqWtwj3JZx@L',
+#        'HOST': 'timhapp.mysql.pythonanywhere-services.com',
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME' : '/home/timhapp/lottobot/db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -105,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Chicago"
 
 USE_I18N = True
 
