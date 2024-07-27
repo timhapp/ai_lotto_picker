@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['timhapp.pythonanywhere.com']
 
 INSTALLED_APPS = [
     "polls.apps.PollsConfig",
+    "draws.apps.DrawsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -73,25 +74,15 @@ WSGI_APPLICATION = "lottobot.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'wantsajo_lottobot',
-#        'USER': 'wantsajo',
-#        'PASSWORD': 'TUQNWdRGbFB6agtnmmKR',
-#        'HOST': 'server005.webhostingpremium.com',
-#        'PORT': '2222',
-#    }
-#}
 DATABASES = {
     'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'timhapp$default',                                                                                                                                                                           
-#        'USER': 'timhapp',
-#        'PASSWORD': 'LuV*KqWtwj3JZx@L',
-#        'HOST': 'timhapp.mysql.pythonanywhere-services.com',
-        'ENGINE' : 'django.db.backends.sqlite3',
-        'NAME' : '/home/timhapp/lottobot/db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'timhapp$default',                                                                                                                                                                           
+        'USER': 'timhapp',
+        'PASSWORD': 'LuV*KqWtwj3JZx@L',
+        'HOST': 'timhapp.mysql.pythonanywhere-services.com',
+#        'ENGINE' : 'django.db.backends.sqlite3',
+#        'NAME' : '/home/timhapp/lottobot/db.sqlite3',
     }
 }
 

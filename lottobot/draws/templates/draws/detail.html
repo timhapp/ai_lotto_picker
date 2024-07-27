@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drawing List</title>
+</head>
+<body>
+    <h1>Drawings</h1>
+    <ul>
+        {% for draw in draws %}
+        <li>{{ draw.draw_date }} : {{ draw,pos1 }} ({{ draw.pos2 }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

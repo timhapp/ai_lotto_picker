@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if latest_draw_data %}
+    <ul>
+    {% for draw in latest_draw_data %}
+        <div style="width:640px;">
+        <h3>Drawing on <a href="/draws/{{ draw.draw_date }}/history/">{{ draw.draw_date }}</a></h3>
+        <div class="numbers-container"> 
+            <p class="numbers">{{ draw.pos1 }}</p> 
+            <p class="numbers">{{ draw.pos2 }}</p> 
+            <p class="numbers">{{ draw.pos3 }}</p> 
+            <p class="numbers">{{ draw.pos4 }}</p> 
+            <p class="numbers">{{ draw.pos5 }}</p>
+            <p class="numbers" style="background-color:red;">{{ draw.pwrb }}</p>
+        </div>
+        <h3>Weather on Draw Date</h3>
+        <p>Barometer : {{ draw.Barometer }}</p>
+        <p>Dewpoint : {{ draw.Dewpoint }}</p>
+        <p>Heat Index : {{ draw.Heat_Index }}</p>
+        <p>Humidity : {{ draw.Hygrometer }}</p>
+        <p>Temperature : {{ draw.Thermometer }}</p>
+        <p>Percipitation : {{ draw.Percipitation }}</p>
+        <p>Wind Direction : {{ draw.WindDirection }}</p>
+        <p>Cloud Cover : {{ draw.CloudCover }}</p>
+        <p>Wind Speed : {{ draw.WindSpeed }}</p>
+        <p>Moon Phase : {{ draw.MoonPhase }}</p>
+        </div>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nothing populated.</p>
+{% endif %}
+{% endblock content %}
