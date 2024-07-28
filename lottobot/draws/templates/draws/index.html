@@ -2,33 +2,53 @@
 
 {% block content %}
 {% if latest_draw_data %}
-    <ul>
+    <div class="container">
     {% for draw in latest_draw_data %}
-        <div style="width:640px;">
-        <h3>Drawing on <a href="/draws/{{ draw.draw_date }}/history/">{{ draw.draw_date }}</a></h3>
-        <div class="numbers-container"> 
-            <p class="numbers">{{ draw.pos1 }}</p> 
-            <p class="numbers">{{ draw.pos2 }}</p> 
-            <p class="numbers">{{ draw.pos3 }}</p> 
-            <p class="numbers">{{ draw.pos4 }}</p> 
-            <p class="numbers">{{ draw.pos5 }}</p>
-            <p class="numbers" style="background-color:red;">{{ draw.pwrb }}</p>
+        <div class="row">
+            <div class="col-12">
+                <h3>For <a href="/draws/{{ draw.draw_date }}/history/">{{ draw.draw_date }}</a> Drawing</h3>
+                <div class="numbers-container">
+                    <p class="numbers">{{ draw.pos1 }}</p>
+                    <p class="numbers">{{ draw.pos2 }}</p>
+                    <p class="numbers">{{ draw.pos3 }}</p>
+                    <p class="numbers">{{ draw.pos4 }}</p>
+                    <p class="numbers">{{ draw.pos5 }}</p>
+                    <p class="numbers" style="background-color:red;">{{ draw.pwrb }}</p>
+                </div>
+            </div>
         </div>
-        <h3>Weather on Draw Date</h3>
-        <p>Barometer : {{ draw.Barometer }}</p>
-        <p>Dewpoint : {{ draw.Dewpoint }}</p>
-        <p>Heat Index : {{ draw.Heat_Index }}</p>
-        <p>Humidity : {{ draw.Hygrometer }}</p>
-        <p>Temperature : {{ draw.Thermometer }}</p>
-        <p>Percipitation : {{ draw.Percipitation }}</p>
-        <p>Wind Direction : {{ draw.WindDirection }}</p>
-        <p>Cloud Cover : {{ draw.CloudCover }}</p>
-        <p>Wind Speed : {{ draw.WindSpeed }}</p>
-        <p>Moon Phase : {{ draw.MoonPhase }}</p>
+        <div class="row">
+            <div class="col-12">
+                <h3>Weather on Draw Date</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Barometer : {{ draw.Barometer }}
+                <br>
+                Dewpoint : {{ draw.Dewpoint }}
+                <br>
+                Heat Index : {{ draw.Heat_Index }}
+                <br>
+                Humidity : {{ draw.Hygrometer }}
+                <br>
+                Temperature : {{ draw.Thermometer }}
+            </div>
+            <div class="col-6">
+                Percipitation : {{ draw.Percipitation }}
+                <br>
+                Wind Direction : {{ draw.WindDirection }}
+                <br>
+                Cloud Cover : {{ draw.CloudCover }}
+                <br>
+                Wind Speed : {{ draw.WindSpeed }}
+                <br>
+                Moon Phase : {{ draw.MoonPhase }}
+            </div>
         </div>
     {% endfor %}
-    </ul>
+    </div>
 {% else %}
-    <p>Nothing populated.</p>
+    <p>Nothing populated. Try another day.</p>
 {% endif %}
 {% endblock content %}

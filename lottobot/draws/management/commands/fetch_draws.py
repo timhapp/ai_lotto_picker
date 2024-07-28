@@ -52,7 +52,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         client = Socrata("data.ny.gov", None)
-        results = client.get("8vkr-v8vh", limit=0, order="draw_date DESC", offset=0)
+        results = client.get("8vkr-v8vh", limit=1, order="draw_date DESC", offset=0)
         draws_data = results
         #print(results)
 
@@ -64,29 +64,32 @@ class Command(BaseCommand):
             response = requests.request("GET", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/250%20Marriott%20Dr%2C%20Ste%20250%2C%20Tallahassee%2C%20FL/" + str(datetime.date(date_obj)) + "/" + str(datetime.date(date_obj)) + "?unitGroup=us&maxDistance=2000&elements=datetime%2Ctemp%2Cfeelslike%2Cdew%2Chumidity%2Cprecip%2Cprecipcover%2Cwindspeedmean%2Cwinddir%2Cpressure%2Ccloudcover%2Cmoonphase%2Csource&include=days%2Cobs%2Cremote&key=PBNL7ZQAHHHJNZ3KXGKZ56G4J&options=stnslevel1&contentType=json")
             weather_data = response.json()
 
-            Drawing.objects.update_or_create(
-                draw_date = str(datetime.date(date_obj)),
-                draw_night = str(datetime.date(date_obj).weekday()),
-                pos1 = number_POS[0],
-                pos2 = number_POS[1],
-                pos3 = number_POS[2],
-                pos4 = number_POS[3],
-                pos5 = number_POS[4],
-                pwrb = number_POS[5],
-                Mx = draw['multiplier'],
-                mega = 0,
-                Barometer = weather_data['days'][0]['pressure'],
-                Dewpoint = weather_data['days'][0]['dew'],
-                Heat_Index = weather_data['days'][0]['feelslike'],
-                Hygrometer = weather_data['days'][0]['humidity'],
-                Thermometer = weather_data['days'][0]['temp'],
-                Percipitation = weather_data['days'][0]['precip'],
-                WindDirection = weather_data['days'][0]['winddir'],
-                CloudCover = weather_data['days'][0]['cloudcover'],
-                WindSpeed = weather_data['days'][0]['windspeedmean'],
-                MoonPhase = weather_data['days'][0]['moonphase'],
-                Station = weather_data['days'][0]['source'],
-            )
+            try:
+                Drawing.objects.update_or_create(
+                    draw_date = str(datetime.date(date_obj)),
+                    draw_night = str(datetime.date(date_obj).weekday()),
+                    pos1 = number_POS[0],
+                    pos2 = number_POS[1],
+                    pos3 = number_POS[2],
+                    pos4 = number_POS[3],
+                    pos5 = number_POS[4],
+                    pwrb = number_POS[5],
+                    Mx = draw['multiplier'],
+                    mega = 0,
+                    Barometer = weather_data['days'][0]['pressure'],
+                    Dewpoint = weather_data['days'][0]['dew'],
+                    Heat_Index = weather_data['days'][0]['feelslike'],
+                    Hygrometer = weather_data['days'][0]['humidity'],
+                    Thermometer = weather_data['days'][0]['temp'],
+                    Percipitation = weather_data['days'][0]['precip'],
+                    WindDirection = weather_data['days'][0]['winddir'],
+                    CloudCover = weather_data['days'][0]['cloudcover'],
+                    WindSpeed = weather_data['days'][0]['windspeedmean'],
+                    MoonPhase = weather_data['days'][0]['moonphase'],
+                    Station = weather_data['days'][0]['source'],
+                )
+            except:
+                print("Exists")
             
             print(str(datetime.date(date_obj)), draw['winning_numbers'])
 
@@ -103,7 +106,7 @@ class Command(BaseCommand):
                 nextdraw_date += timedelta(1)
 
         # or manually set date
-        #nextdraw_date = nextdraw_date.replace(year=2023, month=4, day=10)
+        #nextdraw_date = nextdraw_date.replace(year=2024, month=7, day=20)
 
         nextdraw_date = nextdraw_date.replace(hour=22, minute=0)
         nextdraw_enddate = nextdraw_date.replace(hour=23, minute=0)
@@ -218,13 +221,13 @@ class Command(BaseCommand):
                     totalMatchScore += matchScore
                     print(pred, y_test[index], comparePOS, comparePWB, str(int(matchScore)))
 
-                    # Find the winner!
-                    if totalMatchScore >= winningScore:
-                        winningScore = totalMatchScore
-                        winningState = irandom_state
+                # Find the winner!
+                if totalMatchScore >= winningScore:
+                    winningScore = totalMatchScore
+                    winningState = irandom_state
 
-                print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
-                irandom_state += 1
+            print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
+            irandom_state += 1
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting Random Forest Classification to the Training set
@@ -272,8 +275,7 @@ class Command(BaseCommand):
                     winningState = irandom_state
 
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
-
-            irandom_state += 2
+            irandom_state += 1
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting Random Forest Classification to the Training set
@@ -321,16 +323,16 @@ class Command(BaseCommand):
 
             in_neighbors += 1
 
-            print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
-            # Fitting KNN
-            neigh = KNeighborsClassifier(weights=KNNWeights, algorithm=KNNAlgorithm, n_neighbors=int(winningState))
-            neigh.fit(X_fit, y)
+        print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
+        # Fitting KNN
+        neigh = KNeighborsClassifier(weights=KNNWeights, algorithm=KNNAlgorithm, n_neighbors=int(winningState))
+        neigh.fit(X_fit, y)
 
-            # Predicting the next draw set results
-            nextdraw_n_pred = neigh.predict([nextdraw_set])
-            print(nextdraw_n_pred[0], nextdraw_set)
-            
-            nextDrawResults.append([{"numbers":nextdraw_n_pred[0]},{"score":int(winningScore)},{"class":"weather - KNeighborsClassifier - U"}])
+        # Predicting the next draw set results
+        nextdraw_n_pred = neigh.predict([nextdraw_set])
+        print(nextdraw_n_pred[0], nextdraw_set)
+        
+        nextDrawResults.append([{"numbers":nextdraw_n_pred[0]},{"score":int(winningScore)},{"class":"weather - KNeighborsClassifier - U"}])
 
         ##  KNN Classifier - distance ##
         winningScore = 0
@@ -431,21 +433,19 @@ class Command(BaseCommand):
         #for predictions in nextDrawResults:
         #    print(list(map(int, predictions[0]['numbers'])), predictions[1]['score'], predictions[2]['class'])
         nextDrawResultsSorted = sorted(nextDrawResults, key=lambda k: k[1]['score'], reverse=True)
-        print(nextDrawResultsSorted)
+        #print(nextDrawResultsSorted)
         for predictions in nextDrawResultsSorted:
             print(list(map(int, predictions[0]['numbers'])), predictions[1]['score'], predictions[2]['class'])
 
         ### Write Top Pick to DB ###
-        predicted_positions = nextDrawResultsSorted[0]['numbers'].split(" ")
-        update_prediction_record = WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d"))
-        update_prediction_record.pos1 = predicted_positions[0]
-        update_prediction_record.pos2 = predicted_positions[1]
-        update_prediction_record.pos3 = predicted_positions[2]
-        update_prediction_record.pos4 = predicted_positions[3]
-        update_prediction_record.pos5 = predicted_positions[4]
-        update_prediction_record.pwrb = predicted_positions[5]
-        update_prediction_record.save()
-
-
+        predicted_numbers_arr = nextDrawResultsSorted[0][0]['numbers']
+        #print(predicted_numbers_arr)
+        
+        WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d")).update(pos1 = predicted_numbers_arr[0])
+        WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d")).update(pos2 = predicted_numbers_arr[1])
+        WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d")).update(pos3 = predicted_numbers_arr[2])
+        WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d")).update(pos4 = predicted_numbers_arr[3])
+        WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d")).update(pos5 = predicted_numbers_arr[4])
+        WeatherDrawing.objects.filter(draw_date=nextdraw_date.strftime("%Y-%m-%d")).update(pwrb = predicted_numbers_arr[5])
 
 
