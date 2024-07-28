@@ -186,8 +186,9 @@ class Command(BaseCommand):
 
         nextDrawResults = []
 
+        ########################
         ### MAKE PREDICTIONS ###
-
+        ########################
 
         ## Random Forest - entropy ##
         winningScore = 0
@@ -219,7 +220,7 @@ class Command(BaseCommand):
 
                 if matchScore >= 6:
                     totalMatchScore += matchScore
-                    print(pred, y_test[index], comparePOS, comparePWB, str(int(matchScore)))
+                    #print(pred, y_test[index], comparePOS, comparePWB, str(int(matchScore)))
 
                 # Find the winner!
                 if totalMatchScore >= winningScore:
@@ -227,7 +228,7 @@ class Command(BaseCommand):
                     winningState = irandom_state
 
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
-            irandom_state += 1
+            irandom_state += 9
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting Random Forest Classification to the Training set
@@ -268,14 +269,15 @@ class Command(BaseCommand):
 
                 if matchScore >= 6:
                     totalMatchScore += matchScore
-                    print(pred, y_test[index], comparePOS, comparePWB, str(int(matchScore)))
+                    #print(pred, y_test[index], comparePOS, comparePWB, str(int(matchScore)))
+
                 # Find the winner!
                 if totalMatchScore >= winningScore:
                     winningScore = totalMatchScore
                     winningState = irandom_state
 
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
-            irandom_state += 1
+            irandom_state += 9
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting Random Forest Classification to the Training set
@@ -314,14 +316,14 @@ class Command(BaseCommand):
                 matchScore = predictionScore(pred[:5], y_test[index][:5]) + (predictionScore(pred[5:], y_test[index][5:])*6)
                 if matchScore >= 6:
                     totalMatchScore += matchScore
-                    print(pred, y_test[index], comparePOS, comparePWB, matchScore)
+                    #print(pred, y_test[index], comparePOS, comparePWB, matchScore)
+
                 # Find the winner!
                 if totalMatchScore >= winningScore:
                     winningScore = totalMatchScore
                     winningState = in_neighbors
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(totalMatchScore) + ' <------')
-
-            in_neighbors += 1
+            in_neighbors += 9
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting KNN
@@ -360,14 +362,15 @@ class Command(BaseCommand):
                 matchScore = predictionScore(pred[:5], y_test[index][:5]) + (predictionScore(pred[5:], y_test[index][5:])*6)
                 if matchScore >= 6:
                     totalMatchScore += matchScore
-                    print(pred, y_test[index], comparePOS, comparePWB, matchScore)
+                    #print(pred, y_test[index], comparePOS, comparePWB, matchScore)
+                
                 # Find the winner!
                 if totalMatchScore >= winningScore:
                     winningScore = totalMatchScore
                     winningState = in_neighbors
-            print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(totalMatchScore) + ' <------')
 
-            in_neighbors += 1
+            print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(totalMatchScore) + ' <------')
+            in_neighbors += 9
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting KNN
@@ -404,14 +407,15 @@ class Command(BaseCommand):
                 matchScore = predictionScore(pred[:5], y_test[index][:5]) + (predictionScore(pred[5:], y_test[index][5:])*6)
                 if matchScore >= 6:
                     totalMatchScore += matchScore
-                    print(pred, y_test[index], comparePOS, comparePWB, matchScore)#, round(accuracy,3), X_test[index])
+                    #print(pred, y_test[index], comparePOS, comparePWB, matchScore)#, round(accuracy,3), X_test[index])
+
                 # Find the winner!
                 if totalMatchScore >= winningScore:
                     winningScore = totalMatchScore
                     winningState = in_randoms
-            print('-----> Match Score: ' + str(totalMatchScore) + ' <------')
 
-            in_randoms += 1
+            print('-----> Match Score: ' + str(totalMatchScore) + ' <------')
+            in_randoms += 9
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting RNC
