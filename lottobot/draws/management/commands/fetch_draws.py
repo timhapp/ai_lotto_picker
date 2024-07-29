@@ -106,7 +106,7 @@ class Command(BaseCommand):
                 nextdraw_date += timedelta(1)
 
         # or manually set date
-        #nextdraw_date = nextdraw_date.replace(year=2024, month=7, day=20)
+        #nextdraw_date = nextdraw_date.replace(year=2024, month=7, day=10)
 
         nextdraw_date = nextdraw_date.replace(hour=22, minute=0)
         nextdraw_enddate = nextdraw_date.replace(hour=23, minute=0)
@@ -189,6 +189,7 @@ class Command(BaseCommand):
         ########################
         ### MAKE PREDICTIONS ###
         ########################
+        iteration_throttle = 7
 
         ## Random Forest - entropy ##
         winningScore = 0
@@ -228,7 +229,7 @@ class Command(BaseCommand):
                     winningState = irandom_state
 
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
-            irandom_state += 9
+            irandom_state += iteration_throttle
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting Random Forest Classification to the Training set
@@ -277,7 +278,7 @@ class Command(BaseCommand):
                     winningState = irandom_state
 
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(int(totalMatchScore)) + ' <------')
-            irandom_state += 9
+            irandom_state += iteration_throttle
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting Random Forest Classification to the Training set
@@ -323,7 +324,7 @@ class Command(BaseCommand):
                     winningScore = totalMatchScore
                     winningState = in_neighbors
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(totalMatchScore) + ' <------')
-            in_neighbors += 9
+            in_neighbors += iteration_throttle
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting KNN
@@ -370,7 +371,7 @@ class Command(BaseCommand):
                     winningState = in_neighbors
 
             print('-----> Accuracy: ' + str(round(accuracyScore,4)) + ' | Match Score: ' + str(totalMatchScore) + ' <------')
-            in_neighbors += 9
+            in_neighbors += iteration_throttle
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting KNN
@@ -415,7 +416,7 @@ class Command(BaseCommand):
                     winningState = in_randoms
 
             print('-----> Match Score: ' + str(totalMatchScore) + ' <------')
-            in_randoms += 9
+            in_randoms += iteration_throttle
 
         print('-----> Winner is ' + str(int(winningState)) + ' with ' + str(int(winningScore)) + ' <------')
         # Fitting RNC
