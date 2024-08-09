@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if latest_draw_data %}
+{% if historic_draw_data %}
     <div class="container">
-    {% for draw in latest_draw_data %}
+    {% for draw in historic_draw_data %}
         <div class="row">
             <div class="col-12">
-                <h3>Drawing for <!a href="/draws/{{ draw.draw_date }}/history/"-->{{ draw.draw_date }}<!/a--></h3>
+                <h3>For <a href="/draws/{{ draw.draw_date }}/history/">{{ draw.draw_date }}</a> Drawing</h3>
+                <p>Actual:</p>
                 <div class="numbers-container">
                     <p class="numbers">{{ draw.pos1 }}</p>
                     <p class="numbers">{{ draw.pos2 }}</p>
@@ -61,6 +62,7 @@
                 Moon Phase : {{ draw.MoonPhase }}
             </div>
         </div>
+        <br><br>
     {% endfor %}
     </div>
 {% else %}

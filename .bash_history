@@ -30,3 +30,7 @@ git ls-files
 git add applications/
 git ls-files
 exit
+workon  
+ls -
+cls
+exit

@@ -5,9 +5,11 @@ from .models import Drawing, WeatherDrawing
 
 def index(request):
     latest_draw_data = Drawing.objects.order_by("-draw_date")[:1]
+    historic_prediction_data = WeatherDrawing.objects.order_by("-draw_date")[:2]
     template = loader.get_template("draws/index.html")
     context = {
         "latest_draw_data": latest_draw_data,
+        "historic_prediction_data": historic_prediction_data,
     }
     return HttpResponse(template.render(context, request))
 
@@ -21,7 +23,14 @@ def prediction(request):
     return HttpResponse(template.render(context, request))
 
 def history(request, draw_date):
-    response = "Show most recent actual vs prediction. Search for results of draw %s."
-    return HttpResponse(response % draw_date)
+    help = "Show most recent actual vs prediction. Search for results of the last %s draws."
+    historic_draw_data = Drawing.objects.order_by("-draw_date")[:10]
+    historic_prediction_data = WeatherDrawing.objects.order_by("-draw_date")[:11]
+    template = loader.get_template("draws/history.html")
+    context = {
+        "historic_draw_data": historic_draw_data,
+        "historic_prediction_data": historic_prediction_data,
+    }
+    return HttpResponse(template.render(context, request))
 
 

@@ -106,7 +106,7 @@ class Command(BaseCommand):
                 nextdraw_date += timedelta(1)
 
         # or manually set date
-        #nextdraw_date = nextdraw_date.replace(year=2024, month=7, day=10)
+        #nextdraw_date = nextdraw_date.replace(year=2024, month=6, day=24)
 
         nextdraw_date = nextdraw_date.replace(hour=22, minute=0)
         nextdraw_enddate = nextdraw_date.replace(hour=23, minute=0)
@@ -198,7 +198,7 @@ class Command(BaseCommand):
 
         irandom_state = 1
 
-        while irandom_state <= 104:
+        while irandom_state <= 105:
             # Fitting Random Forest Classification to the Training set
             RFclassifier = RandomForestClassifier(n_estimators=irandom_state, criterion=RFcriterion, random_state=irandom_state)
             RFclassifier.fit(X_fit_train, y_train)
@@ -248,7 +248,7 @@ class Command(BaseCommand):
         RFcriterion = "gini"
         
         irandom_state = 1
-        while irandom_state <= 104:
+        while irandom_state <= 105:
             # Fitting Random Forest Classification to the Training set
             RFclassifier = RandomForestClassifier(n_estimators=irandom_state, criterion=RFcriterion, random_state=irandom_state)
             RFclassifier.fit(X_fit_train, y_train)
